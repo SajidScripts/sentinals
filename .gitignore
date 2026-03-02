@@ -1,0 +1,36 @@
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Build output
+dist/
+.next/
+out/
+build/
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# macOS
+.DS_Store
+
+# Logs
+logs
+*.log
+
+# Prisma
+# Keep schema but ignore generated files if they end up here (usually in node_modules)

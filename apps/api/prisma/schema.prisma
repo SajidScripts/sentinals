@@ -1,0 +1,139 @@
+// ============================================
+// Sentinals — Prisma Schema
+// Production-grade database schema
+// ============================================
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── Enums ────────────────────────────────────
+
+enum UserRole {
+  ADMIN
+  USER
+}
+
+enum SubscriptionStatus {
+  FREE
+  TRIAL
+  ACTIVE
+  PAST_DUE
+  CANCELLED
+}
+
+enum ProjectStatus {
+  ACTIVE
+  PAUSED
+  ARCHIVED
+}
+
+enum LogSeverity {
+  DEBUG
+  INFO
+  WARN
+  ERROR
+  CRITICAL
+}
+
+enum AuthProvider {
+  LOCAL
+  GOOGLE
+  MICROSOFT
+}
+
+// ─── Models ───────────────────────────────────
+
+/// User — Core identity and authentication model
+/// WHY: Separate auth from profile. Role determines RBAC gates.
+/// INDEX STRATEGY: email is unique + indexed for login lookups.
+model User {
+  id                 String             @id @default(uuid())
+  name               String
+  email              String             @unique
+  password           String?            // bcrypt hashed. Null for OAuth-only users.
+  role               UserRole           @default(USER)
+  subscriptionStatus SubscriptionStatus @default(FREE)
+  authProvider       AuthProvider       @default(LOCAL)
+  authProviderId     String?            // External provider user ID (Google sub, MS oid)
+  stripeCustomerId   String?            @unique // For Stripe integration
+  avatarUrl          String?
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+
+  projects Project[]
+  sessions RefreshToken[]
+
+  @@unique([authProvider, authProviderId]) // Prevent duplicate OAuth accounts
+  @@index([email])
+  @@index([role])
+  @@index([subscriptionStatus])
+  @@map("users")
+}
+
+/// Project — A monitored entity owned by a user
+/// WHY: Core business object. Config is JSON for flexible schema-per-project.
+/// INDEX STRATEGY: userId for ownership queries, status for filtered views.
+model Project {
+  id        String        @id @default(uuid())
+  userId    String
+  name      String
+  status    ProjectStatus @default(ACTIVE)
+  config    Json          @default("{}")
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  user User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  logs Log[]
+
+  @@index([userId])
+  @@index([status])
+  @@index([userId, status])
+  @@map("projects")
+}
+
+/// Log — Structured log entry for a project
+/// WHY: Time-series data for monitoring. Severity enables filtering.
+/// INDEX STRATEGY: Compound index on projectId+timestamp for range queries,
+///                 severity for filtered alerting.
+model Log {
+  id        String      @id @default(uuid())
+  projectId String
+  message   String
+  severity  LogSeverity @default(INFO)
+  metadata  Json?       // Optional structured data
+  timestamp DateTime    @default(now())
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+  @@index([projectId, timestamp(sort: Desc)])
+  @@index([severity])
+  @@index([projectId, severity])
+  @@map("logs")
+}
+
+/// RefreshToken — JWT refresh token storage
+/// WHY: Enables token rotation. Family tracking prevents token replay attacks.
+///      Revocation support for logout-all-devices.
+model RefreshToken {
+  id        String   @id @default(uuid())
+  token     String   @unique
+  userId    String
+  family    String   // Token family for rotation detection
+  revoked   Boolean  @default(false)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([token])
+  @@index([userId])
+  @@index([family])
+  @@map("refresh_tokens")
+}

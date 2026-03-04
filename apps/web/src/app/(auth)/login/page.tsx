@@ -63,10 +63,10 @@ export default function LoginPage() {
                     </svg>
                     Continue with Microsoft
                 </a>
-            </div>
+            </div >
 
             {/* ─── Divider ────────────────────────────── */}
-            <div className="relative mb-6">
+            < div className="relative mb-6" >
                 <div className="absolute inset-0 flex items-center">
                     <div className="w-full border-t border-border" />
                 </div>
@@ -75,10 +75,10 @@ export default function LoginPage() {
                         or continue with email
                     </span>
                 </div>
-            </div>
+            </div >
 
             {/* ─── Email/Password Form ────────────────── */}
-            <form onSubmit={handleSubmit} className="space-y-4">
+            < form onSubmit={handleSubmit} className="space-y-4" >
                 <div>
                     <label htmlFor="email" className="block text-sm font-medium mb-1.5">
                         Email
@@ -89,7 +89,6 @@ export default function LoginPage() {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="you@example.com"
-                        required
                         className="w-full rounded-lg border border-input bg-background px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-ring placeholder:text-muted-foreground"
                     />
                 </div>
@@ -105,7 +104,6 @@ export default function LoginPage() {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             placeholder="••••••••"
-                            required
                             className="w-full rounded-lg border border-input bg-background px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-ring pr-10 placeholder:text-muted-foreground"
                         />
                         <button
@@ -126,7 +124,7 @@ export default function LoginPage() {
                     {isLoading && <Loader2 className="w-4 h-4 animate-spin" />}
                     {isLoading ? 'Signing in...' : 'Sign In'}
                 </button>
-            </form>
+            </form >
 
             <p className="mt-6 text-center text-sm text-muted-foreground">
                 Don&apos;t have an account?{' '}
@@ -134,6 +132,6 @@ export default function LoginPage() {
                     Sign up
                 </Link>
             </p>
-        </div>
+        </div >
     );
 }

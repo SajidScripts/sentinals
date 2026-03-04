@@ -1,0 +1,16 @@
+sku_id,product_name,category,inventory_level,safety_stock,reorder_point,supplier_lead_time_days,unit_cost,currency,demand_forecast_30d,status
+SKU-10482,ProActive Noise-Canceling Headphones,Audio,420,150,200,14,120.00,USD,850,Active
+SKU-99231,AeroMesh Ergonomic Office Chair,Furniture,12,25,40,45,210.50,USD,45,Critical
+SKU-84732,Ultra HD 4K Monitor 27-inch,Electronics,85,50,75,21,280.00,USD,120,Warning
+SKU-23491,Mechanical Gaming Keyboard Red Switch,Accessories,340,100,150,10,65.00,USD,420,Active
+SKU-88320,Standing Desk Dual Motor Frame,Furniture,8,15,25,30,340.00,USD,22,Critical
+SKU-10294,Bluetooth Portable Speaker Heavy Bass,Audio,890,200,300,14,45.00,USD,1200,Active
+SKU-49382,USB-C Hub 8-in-1 Adapter,Accessories,1500,500,800,7,22.50,USD,3500,Active
+SKU-52930,Smart Home Security Camera 1080p,Smart Home,42,80,120,25,85.00,USD,190,Warning
+SKU-68392,Wireless Charging Pad 15W,Accessories,630,200,350,14,15.50,USD,950,Active
+SKU-77281,Gaming Mouse 16000 DPI RGB,Accessories,275,100,150,12,48.00,USD,310,Active
+SKU-39482,Noise-Isolating Earbuds True Wireless,Audio,18,60,90,30,89.00,USD,140,Critical
+SKU-91823,LED Web Camera 1080p 60fps,Electronics,120,80,110,21,55.00,USD,180,Warning
+SKU-22394,Monitor Mount Dual Arm Gas Spring,Accessories,210,80,120,18,62.00,USD,250,Active
+SKU-55421,Smart LED Light Bulb Color Changing,Smart Home,1150,400,600,10,12.00,USD,2200,Active
+SKU-11928,Acoustic Treatment Foam Panels 12-Pack,Audio,34,50,75,20,28.50,USD,95,Warning

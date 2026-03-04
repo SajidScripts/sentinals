@@ -49,6 +49,7 @@ export const useAuthStore = create<AuthState>()(
                 try {
                     const { data } = await api.post('/v1/auth/login', { email, password });
                     const { user, accessToken, refreshToken } = data.data;
+                    document.cookie = `sentinals-auth-token=${accessToken}; path=/; max-age=86400`;
                     set({
                         user,
                         accessToken,
@@ -67,6 +68,7 @@ export const useAuthStore = create<AuthState>()(
                 try {
                     const { data } = await api.post('/v1/auth/register', { name, email, password });
                     const { user, accessToken, refreshToken } = data.data;
+                    document.cookie = `sentinals-auth-token=${accessToken}; path=/; max-age=86400`;
                     set({
                         user,
                         accessToken,
@@ -81,6 +83,7 @@ export const useAuthStore = create<AuthState>()(
             },
 
             logout: () => {
+                document.cookie = 'sentinals-auth-token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
                 set({
                     user: null,
                     accessToken: null,

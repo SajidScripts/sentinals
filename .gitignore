@@ -34,3 +34,5 @@ logs
 
 # Prisma
 # Keep schema but ignore generated files if they end up here (usually in node_modules)
+
+.vercel

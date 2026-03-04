@@ -15,7 +15,7 @@ async function bootstrap() {
     app.useLogger(app.get(Logger));
 
     const configService = app.get(ConfigService);
-    const port = configService.get<number>('API_PORT', 3001);
+    const port = configService.get<number>('PORT') || configService.get<number>('API_PORT', 3001);
     const prefix = configService.get<string>('API_PREFIX', 'api');
 
     // ─── Security ────────────────────────────────

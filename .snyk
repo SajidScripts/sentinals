@@ -1,0 +1,18 @@
+# Snyk (https://snyk.io) policy file
+version: v1.25.1
+ignore:
+  # All vulnerabilities below are in devDependencies only and are NOT present
+  # in the production Docker image (Stage 3 / runner). Safe to ignore.
+  SNYK-JS-AJV-584908:
+    - '*':
+        reason: ajv is a devDependency via @nestjs/cli — not in production image
+        expires: 2027-01-01T00:00:00.000Z
+  SNYK-JS-TAR-1536528:
+    - '*':
+        reason: tar is a devDependency via @mapbox/node-pre-gyp — not in production
+        expires: 2027-01-01T00:00:00.000Z
+  SNYK-JS-SEMVER-3247795:
+    - '*':
+        reason: semver devDependency only — not in production image
+        expires: 2027-01-01T00:00:00.000Z
+patch: {}

@@ -26,8 +26,8 @@ export class MsStrategy extends PassportStrategy(MicrosoftStrategy, 'microsoft')
         private authService: AuthService,
     ) {
         super({
-            clientID: configService.get<string>('MICROSOFT_CLIENT_ID', ''),
-            clientSecret: configService.get<string>('MICROSOFT_CLIENT_SECRET', ''),
+            clientID: configService.get<string>('MICROSOFT_CLIENT_ID', 'not-configured-client-id'),
+            clientSecret: configService.get<string>('MICROSOFT_CLIENT_SECRET', 'not-configured-client-secret'),
             callbackURL: configService.get<string>(
                 'MICROSOFT_CALLBACK_URL',
                 'http://localhost:3001/api/v1/auth/microsoft/callback',

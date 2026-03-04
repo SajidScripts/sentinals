@@ -6,7 +6,7 @@ WORKDIR /app
 # Install all deps (including dev) needed to build
 COPY package*.json ./
 COPY prisma ./prisma/
-RUN npm ci
+RUN npm install
 
 COPY . .
 RUN npx prisma generate && npm run build
@@ -18,7 +18,7 @@ WORKDIR /app
 
 COPY package*.json ./
 COPY prisma ./prisma/
-RUN npm ci --omit=dev && npx prisma generate
+RUN npm install --omit=dev && npx prisma generate
 
 # ─── Stage 3: Runner ─────────────────────────────────────────────────────────
 # Final minimal image with only what's needed to run
